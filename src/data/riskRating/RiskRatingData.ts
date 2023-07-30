@@ -9,7 +9,9 @@ export interface RiskRating {
   risk_category?: string
   risk_severity?: string
   risk_occurrence_probability?: string
+  mitigation_plan?:string
   key_change_id?: string
+  project_id?: string
 }
 
 export interface DataRating {
@@ -25,7 +27,9 @@ export interface GetInput {
   risk_category?: string
   risk_severity?: string
   risk_occurrence_probability?: string
+  mitigation_plan?:string
   key_change_id?: string
+  project_id?: string
 }
 
 export const get = (riskRatings: () => QueryBuilder) => async (input: GetInput) => {
