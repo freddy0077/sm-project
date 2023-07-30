@@ -42,8 +42,8 @@ const initializeExpress = async () => {
         'http://localhost:3001',
         'http://localhost:5173',
         'http://sm-beta-changeverveacademy.com',
-        'https://sm-alpha-changeverveacademy.com',
-        'http://sm-alpha-changeverveacademy.com',
+        'https://sm-alpha.changeverveacademy.com',
+        'http://sm-alpha.changeverveacademy.com',
     ];
 
     app.use(cors({
