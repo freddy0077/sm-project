@@ -37,7 +37,17 @@ export const get = (budgets: () => QueryBuilder) => async (input: GetInput) => {
 }
 
 export const getAll = (budgets: () => QueryBuilder) => async (input: GetInput) => {
-  return budgets().select().where(input)
+
+  const query = budgets().select("Budget.*", "BudgetItem.name", "BudgetItem.id as budget_item_id").from('Budget')
+       .leftJoin('BudgetItem', 'Budget.budget_item_id', 'BudgetItem.id')
+
+  if (input && input.project_id) {
+    query.where('Budget.project_id', input.project_id);
+  }
+
+  if (input && !input.project_id) query.where(input)
+
+  return  query.orderBy("created_at", "desc")
 }
 
 export const insert = (budgets: () => QueryBuilder) => async (input: GetInput) => {

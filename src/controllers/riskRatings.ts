@@ -48,6 +48,8 @@ export const addRiskRating = catchErrors(async (req, res) => {
     const exists = await riskRatingHandler.get({key_change_id: req.body.key_change_id})
     let riskRating;
 
+    console.log("Exists", exists)
+
     if (exists){
         await riskRatingHandler.update({
             id: exists?.id,

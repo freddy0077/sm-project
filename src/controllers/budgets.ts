@@ -8,9 +8,25 @@ export const getBudgets = catchErrors(async (req, res) => {
     const budgetHandler = await BudgetHandlers.create(data)
 
     console.log("Body", req.query)
-    const query: any = req.query.type ? {budget_item_id: req.params.id}: {}
+
+    // let query: any = {};
+    let queryObject
+
+    console.log(req.query.type)
+
+    if (req.query.type) {
+        if (req.query.type === "project") {
+            queryObject = {project_id: req.query.id}
+            console.log("Query object 1", queryObject)
+
+        } else if (req.query.type === "budget_item") {
+            queryObject = {budget_item_id: req.params.id}
+        }
+    }
+
+    // const query: any = req.query.type ? req.query.type === "project_id"? {project_id: req.query.project_id}: req.query.type === "budget_item" ?  {budget_item_id: req.params.id}: {} : {}
     console.log("Query", req.params)
-    const budgets = await budgetHandler.getAll(query)
+    const budgets = await budgetHandler.getAll(queryObject)
     res.respond({ data: budgets });
 });
 
@@ -85,3 +101,4 @@ export const deleteBudget = catchErrors(async (req, res) => {
 
     res.respond({ message: 'Budget deleted successfully' });
 });
+

@@ -23,7 +23,8 @@ export const getRiskLevers = catchErrors(async (req, res) => {
     const riskLeverHandler = await RiskLeverHandlers.create(data); // Updated handler name
     console.log('Body', req.params);
 
-    const riskLevers = (await riskLeverHandler.getAll({})).map((dec, index) => {
+    const queryParamObject: any = req.query ? {key_change_id: req.query.id}: {}
+    const riskLevers = (await riskLeverHandler.getAll(queryParamObject)).map((dec, index) => {
         return {
             No: index + 1,
             created_at: humanReadableDate(dec.created_at?.toString()),
