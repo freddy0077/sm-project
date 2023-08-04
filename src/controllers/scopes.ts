@@ -49,7 +49,7 @@ export const updateScope = catchErrors(async (req, res) => {
     const data = await DataProvider.create()
     const scopeHandler = await ScopeHandlers.create(data)
 
-    const id = req.params.id;
+    const id = req.body.id;
     const updateData = req.body;
     if (!id || !updateData) {
         res.send("Missing scope id or update data").status(400)

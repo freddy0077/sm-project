@@ -8,6 +8,7 @@ export interface Scope {
   id: string
   description?: string
   project_id?: string
+  in_scope?: boolean
 }
 
 
@@ -23,6 +24,7 @@ export interface GetInput {
   id?: string
   description?: string
   project_id?: string
+  in_scope?: boolean
 }
 
 export const get = (scopes: () => QueryBuilder) => async (input: GetInput) => {

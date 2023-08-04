@@ -5,7 +5,7 @@ import {DataClient} from '../index'
 import {Database} from '../../config'
 
 export interface Project {
-  id: string
+  id?: string
   category_id?: string;
   project_name?: string;
   initiating_dept?: string;
@@ -64,17 +64,35 @@ export interface GetInput {
 }
 
 export const get = (projects: () => QueryBuilder) => async (input: GetInput) => {
-  return  projects().select().where(input).first()
+  // return  projects().select().where(input).first()
+  const query = projects().select("Project.*", "ChangeApproach.type", "ChangeApproach.complexity_of_change")
+      .from('Project')
+      .leftJoin('ChangeApproach', 'Project.id', 'ChangeApproach.project_id');
 
-  // const query = projects().select("Project.*", "HighLevelPlan.step_one","HighLevelPlan.step_two", "HighLevelPlan.step_three", "HighLevelPlan.step_four").from('Project')
-  //     .leftJoin('HighLevelPlan', 'Project.id', 'HighLevelPlan.project_id')
-  // if (input) query.where(input)
+  if (input) {
+    // @ts-ignore
+    query.where('Project.id', input.id);
+  }
 
-  // return  query.orderBy("HighLevelPlan.order", "asc").first()
+  return query.first();
+
 }
 
 export const getAll = (projects: () => QueryBuilder) => async (input: GetInput) => {
-  return  projects().select().where(input)
+  // return  projects().select().where(input)
+  const query = projects().select("Project.*", "ChangeApproach.type", "ChangeApproach.complexity_of_change")
+      .from('Project')
+      .leftJoin('ChangeApproach', 'Project.id', 'ChangeApproach.project_id');
+
+  if (input && input.id) {
+    // @ts-ignore
+    query.where('Project.id', input.id);
+  }else{
+    query.where(input)
+  }
+
+  return query.orderBy("created_at", "DESC")
+
 }
 
 export const insert = (projects: () => QueryBuilder) => async (input: GetInput) => {

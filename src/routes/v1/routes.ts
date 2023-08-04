@@ -48,7 +48,7 @@ export const attachPublicRoutes = (app: express.Application): void => {
   app.get('/api/v1/scopes/:id', Auth.authorize(), scopes.getScope)
   app.post('/api/v1/scopes',    Auth.authorize(), scopes.addScope)
   app.patch('/api/v1/scopes',   Auth.authorize(), scopes.updateScope)
-  app.delete('/api/v1/scopes/', Auth.authorize(), scopes.deleteScope)
+  app.delete('/api/v1/scopes/:id', Auth.authorize(), scopes.deleteScope)
 
   //Key Change routes
   app.get('/api/v1/key-changes', Auth.authorize(), keychanges.getKeyChanges)
